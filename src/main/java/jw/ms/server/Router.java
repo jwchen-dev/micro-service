@@ -17,6 +17,10 @@ public class Router {
         routerMap.put(path, request);
     }
 
+    public static void post(String path, AbstractRequest request) {
+        routerMap.put(path, request);
+    }
+
     public static void doProcess(String path, SelectionKey handle) {
         try {
             routerMap.get(path).handle(handle);

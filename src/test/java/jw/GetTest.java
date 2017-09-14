@@ -15,7 +15,7 @@ import java.net.URL;
 /**
  * Unit test for simple App.
  */
-public class AppTest extends TestCase {
+public class GetTest extends TestCase {
 
     @Before
     public void setUp() {
@@ -26,7 +26,7 @@ public class AppTest extends TestCase {
 
     @Test
     public void test() throws Exception {
-        URL url = new URL("http://127.0.0.1:8080/hello2");
+        URL url = new URL("http://127.0.0.1:8080/hello");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
 

@@ -48,7 +48,7 @@ public class Reactor {
     public void run() {
         try {
             while (true) {
-                int readyCount = demultiplexer.select();
+                int readyCount = demultiplexer.select(50);
 
                 if (readyCount == 0) {
                     continue;
@@ -58,6 +58,13 @@ public class Reactor {
 
                 while (handleIterator.hasNext()) {
                     SelectionKey handle = handleIterator.next();
+
+                    handleIterator.remove();
+
+                    if(!handle.isValid()){
+                        continue;
+                    }
+
 //System.out.println(handle.interestOps());
                     if (handle.isAcceptable()) {
                         EventHandler handler = registeredHandlers.get(SelectionKey.OP_ACCEPT);
@@ -78,8 +85,6 @@ public class Reactor {
                         EventHandler handler = registeredHandlers.get(SelectionKey.OP_WRITE);
                         handler.handleEvent(handle);
                     }
-
-                    handleIterator.remove();
                 }
             }
         } catch (Exception e) {
